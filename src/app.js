@@ -15,7 +15,6 @@ app.use(express.json());
 // ── Static Files ────────────────────────────────────────────────────────────
 // Serve the built frontend from ProTracker/dist
 const distPath = path.resolve(__dirname, '../ProTracker/dist');
-console.log(`[Static] Serving files from: ${distPath}`);
 
 // 1. Serve static files first
 app.use(express.static(distPath));
@@ -46,7 +45,6 @@ app.use((req, res) => {
 
   // Otherwise, it's a frontend route (SPA) - serve index.html
   const indexPath = path.join(distPath, 'index.html');
-  console.log(`[SPA Fallback] Serving index.html for: ${req.path}`);
   res.sendFile(indexPath, (err) => {
     if (err) {
       console.error(`[SPA Fallback] Error sending index.html:`, err);

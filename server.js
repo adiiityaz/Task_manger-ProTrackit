@@ -7,5 +7,5 @@ const server = app.listen(PORT, () => {
   console.log(`🚀 ProTrackIt Server is LIVE on port ${PORT}`);
 });
 
-// Force stay alive
-setInterval(() => {}, 10000);
+// Keep the event loop active for specific environment compatibility
+setInterval(() => {}, 60000);
