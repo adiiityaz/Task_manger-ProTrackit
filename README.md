@@ -1,82 +1,67 @@
-# ProTrackIt - Team Task Manager (Full-Stack)
-![ProTrackIt Logo](ProTracker/public/logo.png)
+# 🚀 ProTrackIt.in | Team Task Manager
 
-A modern, full-stack task management application with role-based access control, project tracking, and dashboard analytics.
+ProTrackIt.in is a high-performance, production-ready Team Task Management application built with a modern full-stack architecture. Designed for speed, security, and premium user experience.
 
-## 🚀 Live Demo
-**Live URL:** [Insert Railway URL Here]
-**Demo Video:** [Insert Demo Video Link Here]
+![Dashboard Preview](https://raw.githubusercontent.com/adiiityaz/ProTracker/main/preview.png)
 
-## ✨ Features
-- **Authentication:** Secure Signup/Login with JWT.
-- **Role-Based Access Control:** 
-  - **Admin:** Full control over projects and task creation.
-  - **Member:** Can view projects, tasks, and update the status of tasks assigned to them.
-- **Project Management:** Create and manage high-level development initiatives.
-- **Task Management:** Create tasks, assign them to team members, set priorities, and track deadlines.
-- **Dashboard Overview:** Real-time stats, status distribution, and priority breakdown.
-- **Responsive Design:** Premium dark-themed UI built with React, TailwindCSS, and Lucide icons.
+## 🛠️ Tech Stack
 
-## 🔑 Seeder Credentials
-- **Admin:** `admin@protrackit.in` / `admin123`
-- **Members:** Sign up via the frontend (automatically assigned the `MEMBER` role). Example: `member@protrackit.in`.
+- **Frontend**: React 18, Vite, Tailwind CSS, Lucide Icons, Motion.js.
+- **Backend**: Node.js, Express 5.x (Modern Routing).
+- **Database**: Prisma 7.x (ORM) with SQLite (Local) and PostgreSQL (Production support).
+- **Security**: JWT Authentication, Bcryptjs, Role-Based Access Control (RBAC).
+- **UI/UX**: Glassmorphism, Zomato-style inline validation, Premium Dark Mode.
 
-## 🛠️ Technology Stack
-- **Frontend:** React, Vite, TailwindCSS, Recharts, Framer Motion.
-- **Backend:** Node.js, Express.
-- **Database:** PostgreSQL (Production) / SQLite (Local) with Prisma ORM.
-- **Deployment:** Railway.
+## 🌟 Key Features
 
-## 📦 Installation & Setup
+- **RBAC (Role-Based Access Control)**:
+  - **ADMIN**: Create projects, manage team tasks, and oversee workspace.
+  - **MEMBER**: Sign up, view projects, and update task status.
+- **Modern SPA Architecture**: Fully integrated frontend and backend on a single port for seamless deployment.
+- **Prisma 7 Ready**: Implements the latest mandatory Driver Adapter patterns (`better-sqlite3`).
+- **Express 5 Optimized**: Robust routing with modern path-matching logic.
+- **Glassmorphism UI**: A stunning, premium dark-themed interface with smooth micro-animations.
 
-### 1. Clone the repository
+## 🚀 Getting Started
+
+### 1. Installation
 ```bash
-git clone <your-repo-url>
-cd ProTrack
+npm install
+npm run build:frontend
 ```
 
-### 2. Backend Setup
-Create a `.env` file in the root directory:
+### 2. Environment Setup
+Create a `.env` file in the root:
 ```env
 PORT=3000
-DATABASE_URL="your-postgresql-url"
-JWT_SECRET="your-secret-key"
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="your_premium_secret_key"
+NODE_ENV="production"
 ```
 
-Install dependencies and generate Prisma client:
+### 3. Database Initialization
 ```bash
-npm install
-npx prisma generate
+npx prisma db push
+npm run seed
 ```
 
-### 3. Frontend Setup
-The frontend is located in the `ProTracker` directory.
+### 4. Launch
 ```bash
-cd ProTracker
-npm install
-```
-
-### 4. Running the App
-**Development Mode:**
-```bash
-# In the root directory
-npm run dev
-```
-
-**Production Build:**
-```bash
-# In the root directory
-npm run build
 npm start
 ```
+Your app will be live at `http://localhost:3000`.
 
-## 📝 Assignment Requirements (A-Z Done)
-- [x] REST APIs + Database
-- [x] Proper validations & relationships
-- [x] Role-based access control (Admin/Member)
-- [x] Dashboard (tasks, status, overdue)
-- [x] Deploy using Railway
-- [x] README & Video
+## 🔑 Default Admin Account
+- **Email**: `admin@protrackit.in`
+- **Password**: `admin123`
+*(Members can sign up directly via the UI)*
+
+## 🛡️ Audit Status
+- [x] JWT Authentication
+- [x] Prisma 7 Migration
+- [x] Express 5 Path Fixes
+- [x] RBAC Enforcement
+- [x] Zomato-style Validation
 
 ---
-*Created for the Team Task Manager Assignment.*
+Developed with ❤️ by **Antigravity AI** for **ProTrackIt.in**
