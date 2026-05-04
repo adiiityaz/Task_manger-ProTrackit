@@ -62,6 +62,3 @@ Your app will be live at `http://localhost:3000`.
 - [x] Express 5 Path Fixes
 - [x] RBAC Enforcement
 - [x] Zomato-style Validation
-
----
-Developed with ❤️ by **Antigravity AI** for **ProTrackIt.in**
