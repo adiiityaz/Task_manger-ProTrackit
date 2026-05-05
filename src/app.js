@@ -29,6 +29,18 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// ── Database Verification ───────────────────────────────────────────────────
+const prisma = require('./config/prisma');
+app.get('/db-test', async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.send('DB Connected ✅');
+  } catch (err) {
+    console.error('❌ Health Check Failed:', err.message);
+    res.status(503).send('DB NOT Connected ❌');
+  }
+});
+
 // ── SPA Fallback ────────────────────────────────────────────────────────────
 // If no API route or static file matches, and it's not a request for a file (extension), serve index.html
 app.use((req, res) => {
