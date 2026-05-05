@@ -2,8 +2,6 @@
 
 ProTrackIt.in is a high-performance, production-ready Team Task Management application built with a modern full-stack architecture. Designed for speed, security, and premium user experience.
 
-![Dashboard Preview](https://raw.githubusercontent.com/adiiityaz/ProTracker/main/preview.png)
-
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18, Vite, Tailwind CSS, Lucide Icons, Motion.js.
