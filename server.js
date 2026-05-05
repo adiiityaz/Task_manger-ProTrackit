@@ -19,21 +19,20 @@ async function startServer() {
     // ── Auto-Seed Admin ──────────────────────────────────────────────────────
     const bcrypt = require('bcryptjs');
     const adminEmail = 'admin@protrackit.in';
-    const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
+    const hashedPassword = await bcrypt.hash('admin123', 12);
     
-    if (!existingAdmin) {
-      console.log('👤 No admin found. Creating default production admin...');
-      const hashedPassword = await bcrypt.hash('admin123', 12);
-      await prisma.user.create({
-        data: {
-          name: 'System Admin',
-          email: adminEmail,
-          password: hashedPassword,
-          role: 'ADMIN',
-        },
-      });
-      console.log('✅ Default Admin created: admin@protrackit.in / admin123');
-    }
+    await prisma.user.upsert({
+      where: { email: adminEmail },
+      update: { password: hashedPassword },
+      create: {
+        name: 'System Admin',
+        email: adminEmail,
+        password: hashedPassword,
+        role: 'ADMIN',
+      },
+    });
+    console.log('✅ Production Admin verified/updated: admin@protrackit.in / admin123');
+
   } catch (err) {
     console.error('❌ DB Connection Failed:', err.message);
     console.warn('⚠️ Server is starting in degraded mode (DB unavailable).');
