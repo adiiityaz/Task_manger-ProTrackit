@@ -14,9 +14,14 @@ if (dbUrl.startsWith('file:')) {
   });
 } else {
   // PostgreSQL Production (Railway)
-  // Note: For production with Prisma 7, use @prisma/adapter-pg
+  const { Pool } = require('pg');
+  const { PrismaPg } = require('@prisma/adapter-pg');
+  
+  const pool = new Pool({ connectionString: dbUrl });
+  const adapter = new PrismaPg(pool);
+  
   prisma = new PrismaClient({
-    datasourceUrl: dbUrl,
+    adapter,
     log: ['error']
   }); 
 }

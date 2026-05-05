@@ -62,7 +62,7 @@ export default function Shell({ children }: ShellProps) {
           <div className="bg-zinc-800/50 border border-zinc-700/30 rounded-xl p-3 mb-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center border border-zinc-600 text-xs font-bold text-zinc-100">
-                {user?.name?.charAt(0).toUpperCase() || 'U'}
+                {(user?.name?.[0] || 'U').toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-zinc-100 truncate">{user?.name}</p>

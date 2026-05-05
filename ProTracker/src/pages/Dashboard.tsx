@@ -273,8 +273,12 @@ export default function Dashboard() {
           </div>
           <div className="space-y-4">
             {tasks
-              .filter(t => t.status !== 'DONE')
-              .sort((a, b) => parseISO(a.dueDate).getTime() - parseISO(b.dueDate).getTime())
+              .filter(t => t.status !== 'DONE' && t.dueDate)
+              .sort((a, b) => {
+                const dateA = a.dueDate ? parseISO(a.dueDate).getTime() : 0;
+                const dateB = b.dueDate ? parseISO(b.dueDate).getTime() : 0;
+                return dateA - dateB;
+              })
               .slice(0, 3)
               .map(task => (
                 <div key={task.id} className="p-4 bg-zinc-800/30 rounded-xl border border-zinc-800/50">
