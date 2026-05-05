@@ -11,7 +11,7 @@
     "db:start": "node start-db.js",
     "dev:all": "concurrently -k -p \"[{name}]\" -n \"DB,API,WEB\" -c \"magenta,cyan,yellow\" \"npm run db:start\" \"wait-on tcp:5434 && npm run dev\" \"npm run dev --prefix ProTracker\"",
     "start": "node server.js",
-    "build": "npm run build:frontend && npx prisma generate && npx prisma db push --accept-data-loss",
+    "build": "npm run build:frontend && npx prisma generate",
     "build:frontend": "npm install --prefix ProTracker && npm run build --prefix ProTracker",
     "postinstall": "npx prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"

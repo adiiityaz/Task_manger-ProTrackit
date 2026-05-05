@@ -10,8 +10,14 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
+const { execSync } = require('child_process');
+
 async function startServer() {
   try {
+    console.log('⏳ [Startup] Synchronizing Database Schema...');
+    // Run db push at runtime where we have DB access
+    execSync('npx prisma db push --accept-data-loss', { stdio: 'inherit' });
+    
     console.log('⏳ [Startup] Verifying Database Connection...');
     await prisma.$queryRaw`SELECT 1`;
     console.log('✅ [Startup] DB Connected Successfully');
