@@ -13,13 +13,15 @@ async function run() {
   
   try {
     const hashedPassword = await bcrypt.hash('admin123', 12);
-    const userId = crypto.randomUUID(); // Provide the ID that Prisma expects
+    const userId = crypto.randomUUID(); 
     
     console.log('⏳ Creating admin user...');
 
+    // We only send the 5 required columns. 
+    // The database will handle createdAt/updatedAt automatically.
     await pool.query(`
-      INSERT INTO "User" (id, name, email, password, role, "createdAt", "updatedAt")
-      VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+      INSERT INTO "User" (id, name, email, password, role)
+      VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (email) DO UPDATE 
       SET role = 'ADMIN', password = $4
     `, [userId, 'System Admin', 'admin@protrackit.in', hashedPassword, 'ADMIN']);

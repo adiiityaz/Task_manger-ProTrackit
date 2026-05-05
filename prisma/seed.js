@@ -1,22 +1,11 @@
 require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
-const { Pool } = require('pg');
-const { PrismaPg } = require('@prisma/adapter-pg');
 const bcrypt = require('bcryptjs');
-
-const dbUrl = process.env.DATABASE_URL;
-
-if (!dbUrl) {
-  throw new Error('DATABASE_URL is not defined.');
-}
 
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Setup the adapter explicitly to satisfy Prisma 7's constructor
-  const pool = new Pool({ connectionString: dbUrl });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = new PrismaClient();
 
   try {
     // 1. Clean existing data

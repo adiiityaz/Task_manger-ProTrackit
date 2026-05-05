@@ -7,27 +7,21 @@ if (!dbUrl) {
   throw new Error('DATABASE_URL is not defined. Please set it in your environment variables.');
 }
 
-// PostgreSQL Initialization
-const { Pool } = require('pg');
-const { PrismaPg } = require('@prisma/adapter-pg');
-
-// Railway often needs SSL for external connections, but not always for internal.
-// We'll configure it to be flexible.
-const pool = new Pool({ 
-  connectionString: dbUrl,
-  ssl: dbUrl.includes('proxy.rlwy.net') ? { rejectUnauthorized: false } : false
-});
-
-const adapter = new PrismaPg(pool);
-
+// In Prisma 6, we can use the native engine and it handles the connection URL directly.
+// No driver adapters needed for standard local SQLite or production PostgreSQL.
 prisma = new PrismaClient({
-  adapter,
-  log: ['error', 'warn']
+  datasources: {
+    db: {
+      url: dbUrl,
+    },
+  },
+  log: ['error', 'warn'],
 });
 
-// Test connection on startup
-pool.query('SELECT 1').catch(err => {
-  console.error('❌ Database Connection Error:', err.message);
-});
+if (dbUrl.startsWith('file:') || dbUrl.includes('.db')) {
+  console.log('📦 Using SQLite (Local) Database');
+} else {
+  console.log('🐘 Using PostgreSQL (Production) Database');
+}
 
 module.exports = prisma;

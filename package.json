@@ -8,6 +8,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
+    "db:start": "node start-db.js",
+    "dev:all": "concurrently -k -p \"[{name}]\" -n \"DB,API,WEB\" -c \"magenta,cyan,yellow\" \"npm run db:start\" \"wait-on tcp:5434 && npm run dev\" \"npm run dev --prefix ProTracker\"",
     "start": "node server.js",
     "build": "npm run build:frontend && npx prisma generate",
     "build:frontend": "npm install --prefix ProTracker && npm run build --prefix ProTracker",
@@ -18,20 +20,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.8.0",
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "6.4.1",
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^12.9.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
-    "prisma": "^7.8.0"
+    "pg-embedded": "^0.2.3",
+    "prisma": "6.4.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "wait-on": "^9.0.5"
   }
 }
