@@ -2,12 +2,8 @@ require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
-const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
-
-const rawUrl = process.env.DATABASE_URL || 'file:./dev.db';
-const adapter = new PrismaBetterSqlite3({ url: rawUrl });
-
-const prisma = new PrismaClient({ adapter });
+// Standard PrismaClient (no adapter needed for local seeding)
+const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Seeding database...');
@@ -17,7 +13,7 @@ async function main() {
   await prisma.project.deleteMany();
   await prisma.user.deleteMany();
 
-  // 3. Create Admin
+  // 2. Create Admin
   const adminPassword = await bcrypt.hash('admin123', 12);
   const admin = await prisma.user.create({
     data: {
@@ -28,40 +24,29 @@ async function main() {
     },
   });
 
-  // 4. Create Projects
+  // 3. Create Sample Project
   const project1 = await prisma.project.create({
     data: {
-      name: 'Alpha Mobile App',
-      description: 'Development of the core mobile application for the Alpha project.',
+      name: 'Production Launch',
+      description: 'The final push to deploy ProTrackIt to the world.',
       ownerId: admin.id,
     },
   });
 
-  const project2 = await prisma.project.create({
+  // 4. Create Sample Tasks
+  await prisma.task.create({
     data: {
-      name: 'Beta API Integration',
-      description: 'Connecting third-party services to our main API infrastructure.',
-      ownerId: admin.id,
+      title: 'Setup PostgreSQL Database',
+      description: 'Successfully migrate from SQLite to Postgres on Railway.',
+      status: 'DONE',
+      projectId: project1.id,
+      assignedTo: admin.id,
+      dueDate: new Date(),
     },
-  });
-
-  // 5. Create Tasks
-  await prisma.task.createMany({
-    data: [
-      {
-        title: 'Setup PostgreSQL Database',
-        description: 'Configure Railway database and migrate schema.',
-        status: 'TODO',
-        projectId: project2.id,
-        assignedTo: admin.id,
-        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-      },
-    ],
   });
 
   console.log(`✅ Seeding complete!`);
-  console.log(`Admin User: admin@protrackit.in / admin123`);
-  console.log(`Members should sign up via the frontend UI.`);
+  console.log(`Live Admin: admin@protrackit.in / admin123`);
 }
 
 main()
