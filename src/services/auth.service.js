@@ -46,7 +46,10 @@ const login = async ({ email, password }) => {
     throw new AppError('Invalid email or password.', 401);
   }
 
+  console.log(`🔑 [Login] Attempt for: ${email}`);
   const isPasswordValid = await bcrypt.compare(password, user.password);
+  console.log(`🔑 [Login] Result: ${isPasswordValid ? '✅ Match' : '❌ Mismatch'}`);
+
   if (!isPasswordValid) {
     throw new AppError('Invalid email or password.', 401);
   }
